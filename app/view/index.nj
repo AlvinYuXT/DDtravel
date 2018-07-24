@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .a-upload {
+            padding: 4px 10px;
+            height: 20px;
+            line-height: 20px;
+            position: relative;
+            cursor: pointer;
+            color: #888;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1
+        }
+
+        .a-upload input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            cursor: pointer
+        }
+
+        .a-upload:hover {
+            color: #444;
+            background: #eee;
+            border-color: #ccc;
+            text-decoration: none
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form">
+        <a href="javascript:;" class="a-upload">
+            <input type="file" name="" id="">点击这里上传文件
+        </a>
+    </div>
+    <!-- <input type="file" name="file" id="file"> -->
+    <!-- <button onclick="upload()">上传</button> -->
+    <script>
+        function upload() {
+            var file = document.getElementById("file").files[0]
+            var formData = new FormData()
+            formData.append('file', file)
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+        }
+    </script>
+</body>
+
+</html>
