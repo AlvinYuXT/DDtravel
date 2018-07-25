@@ -27,7 +27,7 @@ class PdfService extends Service {
     const pageNumber = pdf.numPages
     let text = []
     for (let i = 0; i < pageNumber; i++) {
-      const page = await pdf.getPage(pageNumber)
+      const page = await pdf.getPage(i + 1)
       const { items } = await page.getTextContent()
       const arr = this.parseItem(items)
       text = [ ...text, ...arr ]

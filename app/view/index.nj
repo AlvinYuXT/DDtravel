@@ -45,7 +45,7 @@
 <body>
     <div class="form">
         <a href="javascript:;" class="a-upload">
-            <input type="file" name="" id="">点击这里上传文件
+            <input type="file" name="" id="file">点击这里上传文件
         </a>
     </div>
     <!-- <input type="file" name="file" id="file"> -->
@@ -58,8 +58,16 @@
             fetch('/upload', {
                 method: 'POST',
                 body: formData
-            })
+            }).then(res=> {
+                if(res.ok) {
+                    return res.json()
+                } else {
+                    throw new Error(res)
+                }
+            }).catch(err=>{console.log(err)})
         }
+        var input = document.getElementById('file')
+        input.onchange = upload
     </script>
 </body>
 

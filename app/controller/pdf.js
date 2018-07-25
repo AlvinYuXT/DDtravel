@@ -9,7 +9,16 @@ class PdfController extends Controller {
     await this.ctx.render('index.nj')
   }
   async upload() {
-    const stream = await this.ctx.getFileStream()
+    let stream
+    try {
+      stream = await this.ctx.getFileStream()
+    } catch (error) {
+      this.ctx.status = 400
+      this.ctx.body = {
+        msg: error.message,
+      }
+      return
+    }
     let buf
     try {
       const parts = await toArray(stream)
