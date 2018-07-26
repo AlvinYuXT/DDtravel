@@ -58,13 +58,15 @@
             fetch('/upload', {
                 method: 'POST',
                 body: formData
-            }).then(res=> {
-                if(res.ok) {
-                    return res.json()
+            }).then(res=>res.json()).then(res=> {
+                if(res.code === 200) {
+                    return res
                 } else {
-                    throw new Error(res)
+                    throw new Error(res.msg)
                 }
-            }).catch(err=>{console.log(err)})
+            }).catch(err=>{
+                console.log(err)
+            })
         }
         var input = document.getElementById('file')
         input.onchange = upload

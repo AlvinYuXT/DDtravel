@@ -12,24 +12,23 @@ class PdfController extends Controller {
     let stream
     try {
       stream = await this.ctx.getFileStream()
-    } catch (error) {
-      this.ctx.status = 400
+      const parts = await toArray(stream)
+      const buf = Buffer.concat(parts)
+      const result = await this.ctx.service.pdf.parsePDF(buf)
+
+      this.ctx.status = 200
       this.ctx.body = {
+        code: 200,
+        result,
+      }
+    } catch (error) {
+
+      this.ctx.status = 200
+      this.ctx.body = {
+        code: 400,
         msg: error.message,
       }
-      return
-    }
-    let buf
-    try {
-      const parts = await toArray(stream)
-      buf = Buffer.concat(parts)
-    } catch (err) {
-      // await sendToWormhole(stream)
-      throw err
-    }
-    const result = await this.ctx.service.pdf.parsePDF(buf)
-    this.ctx.body = {
-      result,
+
     }
   }
 }
